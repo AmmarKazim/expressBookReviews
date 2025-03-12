@@ -105,12 +105,16 @@ async function getAllBooks() {
 
 // get book by isbn
 async function getBookByISBN(isbn) {
-  try {
-    const { data } = await axios.get(`http://localhost:5000/isbn/${isbn}`);
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`http://localhost:5000/isbn/${isbn}`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 }
 
 // get book by author
